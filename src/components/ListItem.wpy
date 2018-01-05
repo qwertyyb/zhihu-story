@@ -1,0 +1,54 @@
+<style lang="stylus">
+.item
+    display flex
+    align-items center
+    padding-left 2%
+    padding-right 2%
+    height 240rpx
+    width 96%
+    margin-bottom 20rpx
+    background white
+.item__image
+    flex 2
+.item__title_content
+    margin-left 20rpx
+    height 100%
+    flex 5
+    display flex
+    flex-wrap wrap
+    align-items center
+.item__title
+    display inline-block
+    width 100%
+    font-size 36rpx
+.item__date
+    text-align right
+    color #888
+    font-size 32rpx
+.item.saw
+    color #999
+</style>
+<template>
+  <navigator url="/pages/detail?id={{story.id}}">
+    <view class="item {{story.saw ? 'saw': ''}}">
+        <image src="{{story.image}}" class="item__image" mode="widthFix"></image>
+        <view class="item__title_content">
+            <text class="item__title">{{story.title}}</text>
+            <text class="item__title item__date">{{story.display_date}}</text>
+        </view>
+    </view>
+  </navigator>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class ListItem extends wepy.component {
+  props = {
+    story: {
+      type: Object,
+      default: {}
+    }
+  }
+}
+</script>

@@ -1,0 +1,187 @@
+<style lang="stylus">
+page
+  background #efefef
+.question
+  padding 20rpx
+  background white
+.question + .question
+  margin-top 20rpx
+.question-title
+  font-weight bolder
+  font-size 44rpx
+.answer
+  padding-top 30rpx
+  padding-bottom 30rpx
+.answer + .answer
+  border-top 4rpx #efefef solid
+.user
+  display flex
+  align-items center
+  flex-wrap nowrap
+  font-weight bold
+  overflow hidden
+  width 700rpx
+.user-avatar
+  width 60rpx
+  height 60rpx
+  border-radius 50%
+  image
+    width 100%
+.user-name
+  margin-left 30rpx
+  font-size 32rpx
+.user-bio
+  flex 1
+  color #999
+  font-size 30rpx
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
+.content
+  margin-top 30rpx
+.content-text
+  margin-top 40rpx
+  margin-bottom 40rpx
+.content-image
+  width 100%
+  margin-top 40rpx
+  margin-bottom 40rpx
+  image
+    width 100%
+
+
+</style>
+<template>
+  <view class="container">
+    <view class="header"></view>
+    <view class="main">
+      <view wx:for="{{questions}}" wx:for-item="question" wx:key="*this" class="question">
+        <text class="question-title">{{question.question}}</text>
+        <view wx:for="{{question.answers}}" wx:for-item="answer" wx:key="*this" class="answer">
+          <view class="user">
+            <image mode="widthFix" src="{{answer.user.img}}" class="user-avatar"></image>
+            <text class="user-name">{{answer.user.name}}</text>
+            <text class="user-bio">{{answer.user.bio}}</text>
+          </view>
+          <view class="content">
+            <block wx:for="{{answer.content}}" wx:key="*this">
+              <view wx:if="{{item.type===2}}" class="content-image">
+                <image mode="widthFix" src="{{item.text}}"></image>
+              </view>
+              <view wx:else class="content-text">
+                <text>{{item.text}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+var DOMParser = require('xmldom').DOMParser
+
+export default class StoryDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '瞎扯'
+  }
+
+  data = {
+    id: 0,
+    questions: [],
+    detailInfo: null
+  }
+
+  computed = {
+    detailApi() {
+      return 'https://news-at.zhihu.com/api/4/news/' + this.id
+    }
+  }
+
+  async onLoad(options) {
+    if (!options.id) {
+      return
+    }
+    wepy.showLoading({
+      title: '正在加载···'
+    })
+    this.id = options.id
+    this.$apply()
+    let res = await this.getDetail()
+    this.detailInfo = res.body
+    wepy.hideLoading()
+    this.$apply()
+  }
+
+  getDetail () {
+    return wepy.request(this.detailApi).then(res => {
+      res.data.body = res.data.body.replace(/<script.*/g, '')
+      this.questions = this.htmlToJson(res.data.body)
+      return res.data
+    })
+  }
+
+  htmlToJson (htmlStr) {
+    let body = htmlStr.replace(/<script.*/g, '')
+    let doc = new DOMParser().parseFromString(body, 'text/html')
+    let elements = doc.documentElement.childNodes
+    for (var i = 0; i < elements.length; i++) {
+      if (elements[i].nodeName === 'div' && elements[i].getAttribute('class') === 'content-inner') {
+        var startNode = elements[i]
+        break
+      }
+    }
+    if (!startNode) {
+      throw new Error('解析HTML错误')
+    }
+    let questions = []
+    // 遍历所有的问题
+    for (let queNode = startNode.firstChild; queNode; queNode = queNode.nextSibling) {
+      if (queNode.nodeName !== 'div' || queNode.getAttribute('class') !== 'question') {
+        continue
+      }
+      let question = {
+        question: queNode.getElementsByTagName('h2')[0].textContent,
+        answers: []
+      }
+
+      // 遍历问题下的回答
+      for (let answerNode = queNode.firstChild; answerNode; answerNode = answerNode.nextSibling) {
+        if (answerNode.nodeName !== 'div' || answerNode.getAttribute('class') !== 'answer') {
+          continue
+        }
+        let answer = {}
+
+        // 寻找回答下的用户和回答的内容
+        for (let infoNode = answerNode.firstChild; infoNode; infoNode = infoNode.nextSibling) {
+          if (infoNode.nodeName === 'div' && infoNode.getAttribute('class') === 'meta') {
+            // 回答下的用户
+            let user = {}
+            user.name = infoNode.getElementsByTagName('span')[0].textContent
+            user.bio = infoNode.getElementsByTagName('span')[1] ? infoNode.getElementsByTagName('span')[1].textContent : ''
+            user.img = infoNode.getElementsByTagName('img')[0].getAttribute('src')
+            answer.user = user
+          } else if (infoNode.nodeName === 'div' && infoNode.getAttribute('class') === 'content') {
+            // 回答的内容
+            let content = []
+            for (let contentNode = infoNode.firstChild; contentNode != null; contentNode = contentNode.nextSibling) {
+              if (contentNode.nodeName === 'p' && contentNode.getElementsByTagName('img').length > 0) {
+                let item = {type: 2, text: contentNode.getElementsByTagName('img')[0].getAttribute('src')}
+                content.push(item)
+              } else if (contentNode.nodeName === 'p') {
+                let item = {type: 1, text: contentNode.textContent}
+                content.push(item)
+              }
+            }
+            answer.content = content
+          }
+        }
+        question.answers.push(answer)
+      }
+      questions.push(question)
+    }
+    return questions
+  }
+}
+</script>

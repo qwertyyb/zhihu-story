@@ -1,0 +1,75 @@
+<style lang="stylus">
+page
+  background #efefef
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{stories}}">
+      <listItem :story="item" class="list-item"></listItem>
+    </repeat>
+    <toast />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  
+  import Toast from 'wepy-com-toast'
+  import ListItem from '@/components/ListItem'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '瞎扯'
+    }
+    components = {
+      toast: Toast,
+      listItem: ListItem
+    }
+    data = {
+      timestamp: 0,
+      stories: []
+    }
+
+    computed = {
+      storyApi () {
+        return 'https://news-at.zhihu.com/api/3/section/2/before/' + this.timestamp
+      }
+    }
+
+    async onLoad () {
+      wepy.showLoading({
+        title: '正在加载···'
+      })
+      let result = await this.getStory()
+      this.stories = result.stories
+      this.$apply()
+      wepy.hideLoading()
+    }
+
+    getStory () {
+      return wepy.request(this.storyApi).then(res => {
+        this.timestamp = res.data.timestamp
+        let year = (new Date()).getFullYear()
+        res.data.stories.forEach(story => {
+          story.image = story.images[0]
+          story.display_date = year + '年' + story.display_date
+          let date = story.date
+          story.display_date = `${date.substr(0, 4)}年${date.substr(4, 2)}月${date.substr(6, 2)}日`
+        })
+        return res.data
+      })
+    }
+
+    onReachBottom () {
+      this.loadMore()
+    }
+
+    async loadMore () {
+      wepy.showNavigationBarLoading()
+      let result = await this.getStory()
+      this.stories = this.stories.concat(result.stories)
+      this.$apply()
+      wepy.hideNavigationBarLoading()
+    }
+  }
+</script>
