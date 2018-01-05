@@ -9,7 +9,8 @@
     margin-bottom 20rpx
     background white
 .item__image
-    flex 2
+    width 200rpx
+    height 200rpx
 .item__title_content
     margin-left 20rpx
     height 100%
