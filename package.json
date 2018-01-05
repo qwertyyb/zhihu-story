@@ -1,14 +1,18 @@
 {
   "name": "zhihuStory",
-  "version": "1.2.8",
-  "description": "",
+  "version": "1.5.0",
+  "description": "知乎日报的瞎扯栏目，微信小程序",
   "main": "dist/app.js",
   "scripts": {
     "dev": "wepy build --watch",
     "build": "cross-env NODE_ENV=production wepy build --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "qwertyyb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qwertyyb/zhihu-story.git"
+  },
   "license": "MIT",
   "dependencies": {
     "wepy": "^1.6.0",
