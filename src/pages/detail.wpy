@@ -125,6 +125,7 @@ export default class StoryDetail extends wepy.page {
   }
 
   async onLoad(options) {
+    console.log(options)
     if (!options.id) {
       return
     }
@@ -207,6 +208,12 @@ export default class StoryDetail extends wepy.page {
       questions.push(question)
     }
     return questions
+  }
+
+  onShareAppMessage (options) {
+    let title = '瞎扯·如何正确的吐槽'
+    let path = '/pages/detail?id=' + this.id
+    return {title, path}
   }
 }
 </script>
