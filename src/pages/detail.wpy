@@ -1,6 +1,26 @@
 <style lang="stylus">
 page
   background #efefef
+.header
+  width 100%
+  position relative
+.header-image
+  width 100%
+  height auto
+.header-text
+  position absolute
+  bottom 20rpx
+  color white
+  width 100%
+.header-title
+  display block
+  font-size 20pt
+  width 100%
+  margin-left 8rpx
+.header-source
+  display block
+  text-align right
+  font-size 12pt
 .question
   padding 20rpx
   background white
@@ -49,11 +69,16 @@ page
   image
     width 100%
 
-
 </style>
 <template>
   <view class="container">
-    <view class="header"></view>
+    <view class="header">
+      <image mode="widthFix" src="{{detailInfo.image}}" class="header-image"></image>
+      <view class="header-text">
+        <text class="header-title">{{detailInfo.title}}</text>
+        <text class="header-source">图片来源：{{detailInfo.image_source}}</text>
+      </view>
+    </view>
     <view class="main">
       <view wx:for="{{questions}}" wx:for-item="question" wx:key="*this" class="question">
         <text class="question-title">{{question.question}}</text>
@@ -90,7 +115,7 @@ export default class StoryDetail extends wepy.page {
   data = {
     id: 0,
     questions: [],
-    detailInfo: null
+    detailInfo: {}
   }
 
   computed = {
@@ -109,7 +134,7 @@ export default class StoryDetail extends wepy.page {
     this.id = options.id
     this.$apply()
     let res = await this.getDetail()
-    this.detailInfo = res.body
+    this.detailInfo = res
     wepy.hideLoading()
     this.$apply()
   }
