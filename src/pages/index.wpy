@@ -46,15 +46,31 @@ page
       wepy.hideLoading()
     }
 
+    onShow () {
+      let saw = wx.getStorageSync('saw') || []
+      this.stories.forEach(story => {
+        console.log(~saw.indexOf(story.id))
+        if (~saw.indexOf(story.id.toString())) {
+          story.saw = true
+        }
+      })
+      console.log(saw)
+      this.$apply()
+    }
+
     getStory () {
       return wepy.request(this.storyApi).then(res => {
         this.timestamp = res.data.timestamp
         let year = (new Date()).getFullYear()
+        let saw = wx.getStorageSync('saw') || []
         res.data.stories.forEach(story => {
           story.image = story.images[0]
           story.display_date = year + '年' + story.display_date
           let date = story.date
           story.display_date = `${date.substr(0, 4)}年${date.substr(4, 2)}月${date.substr(6, 2)}日`
+          if (~saw.indexOf(story.id)) {
+            story.saw = true
+          }
         })
         return res.data
       })

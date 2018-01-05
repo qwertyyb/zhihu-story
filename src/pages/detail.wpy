@@ -138,6 +138,11 @@ export default class StoryDetail extends wepy.page {
     this.detailInfo = res
     wepy.hideLoading()
     this.$apply()
+    let saw = wx.getStorageSync('saw') || []
+    if (!~saw.indexOf(this.id)) {
+      saw.push(this.id)
+      wx.setStorageSync('saw', saw)
+    }
   }
 
   getDetail () {
