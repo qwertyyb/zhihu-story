@@ -1,5 +1,5 @@
 {
-  "name": "zhihuStory",
+  "name": "zhihu-story",
   "version": "1.5.0",
   "description": "知乎日报的瞎扯栏目，微信小程序",
   "main": "dist/app.js",
