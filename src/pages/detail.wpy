@@ -125,7 +125,6 @@ export default class StoryDetail extends wepy.page {
   }
 
   async onLoad(options) {
-    console.log(options)
     if (!options.id) {
       return
     }

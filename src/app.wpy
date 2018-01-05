@@ -36,9 +36,5 @@ export default class extends wepy.app {
     this.use('requestfix')
     this.use('promisify')
   }
-
-  onLaunch() {
-    console.log('hello')
-  }
 }
 </script>

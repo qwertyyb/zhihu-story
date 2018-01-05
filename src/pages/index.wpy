@@ -49,12 +49,10 @@ page
     onShow () {
       let saw = wx.getStorageSync('saw') || []
       this.stories.forEach(story => {
-        console.log(~saw.indexOf(story.id))
         if (~saw.indexOf(story.id.toString())) {
           story.saw = true
         }
       })
-      console.log(saw)
       this.$apply()
     }
 
