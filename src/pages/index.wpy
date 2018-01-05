@@ -17,6 +17,7 @@ page
   import Toast from 'wepy-com-toast'
   import ListItem from '@/components/ListItem'
 
+  /* global wx */
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '瞎扯'

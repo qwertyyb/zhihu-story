@@ -107,6 +107,7 @@ page
 import wepy from 'wepy'
 var DOMParser = require('xmldom').DOMParser
 
+/* global wx */
 export default class StoryDetail extends wepy.page {
   config = {
     navigationBarTitleText: '瞎扯'
