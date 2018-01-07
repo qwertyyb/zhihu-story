@@ -950,7 +950,7 @@ export default class StoryDetail extends wepy.page {
 
   computed = {
     detailApi() {
-      return 'https://news-at.zhihu.com/api/4/news/' + this.id
+      return 'https://news-at.zhihu.com/api/4/news/' //  + this.id
     }
   }
 
@@ -961,9 +961,7 @@ export default class StoryDetail extends wepy.page {
     wepy.showLoading({
       title: '正在加载···'
     })
-    this.id = options.id
-    this.$apply()
-    this.detailInfo = await this.getDetail()
+    this.detailInfo = await this.getDetail(options.id)
     wepy.hideLoading()
     this.$apply()
     let saw = wx.getStorageSync('saw') || []
@@ -973,8 +971,8 @@ export default class StoryDetail extends wepy.page {
     }
   }
 
-  getDetail () {
-    return wepy.request(this.detailApi).then(res => {
+  getDetail (id) {
+    return wepy.request(this.detailApi + id).then(res => {
       res.data.body = res.data.body.replace(/<script.*/g, '')
       // 插入最上面的大图
       var findstr = '<div class="img-place-holder"></div>'

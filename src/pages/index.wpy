@@ -40,17 +40,13 @@ page
       })
       let result = await this.getStory()
       this.stories = result.stories
+      this.checkSaw()
       this.$apply()
       wepy.hideLoading()
     }
 
     onShow () {
-      let saw = wx.getStorageSync('saw') || []
-      this.stories.forEach(story => {
-        if (~saw.indexOf(story.id.toString())) {
-          story.saw = true
-        }
-      })
+      this.checkSaw()
       this.$apply()
     }
 
@@ -71,7 +67,14 @@ page
         return res.data
       })
     }
-
+    checkSaw () {
+      let saw = wx.getStorageSync('saw') || []
+      this.stories.forEach(story => {
+        if (~saw.indexOf(story.id.toString())) {
+          story.saw = true
+        }
+      })
+    }
     onReachBottom () {
       this.loadMore()
     }
