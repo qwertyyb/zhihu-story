@@ -1,75 +1,7 @@
 <style lang="less">
-// page
-//   background #efefef
-// .header
-//   width 100%
-//   position relative
-// .header-image
-//   width 100%
-//   height auto
-// .header-text
-//   position absolute
-//   bottom 20rpx
-//   color white
-//   width 100%
-// .header-title
-//   display block
-//   font-size 20pt
-//   width 100%
-//   margin-left 8rpx
-// .header-source
-//   display block
-//   text-align right
-//   font-size 12pt
-// .question
-//   padding 20rpx
-//   background white
-// .question + .question
-//   margin-top 20rpx
-// .question-title
-//   font-weight bolder
-//   font-size 44rpx
-// .answer
-//   padding-top 30rpx
-//   padding-bottom 30rpx
-// .answer + .answer
-//   border-top 4rpx #efefef solid
-// .user
-//   display flex
-//   align-items center
-//   flex-wrap nowrap
-//   font-weight bold
-//   overflow hidden
-//   width 700rpx
-// .user-avatar
-//   width 60rpx
-//   height 60rpx
-//   border-radius 50%
-//   image
-//     width 100%
-// .user-name
-//   margin-left 30rpx
-//   font-size 32rpx
-// .user-bio
-//   flex 1
-//   color #999
-//   font-size 30rpx
-//   white-space nowrap
-//   text-overflow ellipsis
-//   overflow hidden
-// .content
-//   margin-top 30rpx
-// .content-text
-//   margin-top 40rpx
-//   margin-bottom 40rpx
-// .content-image
-//   width 100%
-//   margin-top 40rpx
-//   margin-bottom 40rpx
-//   image
-//     width 100%
 @import "../wxParse/wxParse.wxss";
 
+/*  */
 article,
 aside,
 details,
@@ -136,7 +68,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace,serif;
+  font-family: monospace, serif;
   font-size: 1em;
 }
 pre {
@@ -206,6 +138,7 @@ ol {
 .main-wrap {
   max-width: 100%;
   min-width: 300px;
+  max-width: 800px;
   margin: 0 auto;
 }
 .content-wrap {
@@ -217,12 +150,13 @@ ol {
 }
 .headline {
   border-bottom: 4px solid #f6f6f6;
+  color: #fff;
 }
 .headline-title.onlyheading {
   margin: 20px 0;
 }
 .headline img {
-  max-width: 100%;
+  width: 100%;
   vertical-align: top;
 }
 .headline-background-link {
@@ -257,11 +191,20 @@ ol {
 }
 .headline-title {
   line-height: 1.2em;
-  color: #000;
   font-size: 22px;
   margin: 20px 0 10px;
-  padding: 0 20px!important;
+  padding: 0 10px!important;
   font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+  font-size: 24px;
+}
+.headline .img-source {
+  position: absolute;
+  bottom: 2px;
+  right: 5px;
+  color: rgba(255, 255, 255, .6);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, .3);
 }
 .meta {
   white-space: nowrap;
@@ -290,11 +233,9 @@ ol {
   display: block;
   margin: 30px auto;
 }
-
-.content img + img {
+.content img+img {
   margin-top: 15px;
 }
-
 .content img[src*="zhihu.com/equation"] {
   display: inline-block;
   margin: 0 3px;
@@ -322,7 +263,7 @@ ol {
   overflow: hidden;
   padding: 0 20px!important;
 }
-.question + .question {
+.question+.question {
   border-top: 5px solid #f6f6f6;
 }
 .question-title {
@@ -336,7 +277,7 @@ ol {
   color: #444;
   font-weight: 700;
 }
-.answer + .answer {
+.answer+.answer {
   border-top: 2px solid #f6f6f6;
   padding-top: 20px;
 }
@@ -414,13 +355,6 @@ ol {
 .night .icon-vote {
   background-image: url(http://static.daily.zhihu.com/img/app/Dark_Comment_Vote.png) !important;
 }
-.img-wrap .headline-title {
-  bottom: 5px;
-}
-.img-wrap .img-source {
-  right: 10px!important;
-  font-size: 9px;
-}
 .global-header {
   position: static;
 }
@@ -431,7 +365,15 @@ ol {
   margin-right: 0;
 }
 .headline .img-place-holder {
-  height: 200px;
+  height: 82vw;
+  max-height: 375px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  background: #bbb;
+}
+.img-place-holder img {
+  margin: -18% auto 0 auto;
 }
 .from-column {
   width: 280px;
@@ -456,10 +398,10 @@ body.night,
 .night .content-wrap {
   background: #343434;
 }
-.night .answer + .answer {
+.night .answer+.answer {
   border-top: 2px solid #303030;
 }
-.night .question + .question {
+.night .question+.question {
   border-top: 4px solid #303030;
 }
 .night .view-more a {
@@ -544,10 +486,10 @@ body.night,
 }
 .highlight::-webkit-scrollbar-thumb:horizontal {
   border-radius: 6px;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, .5);
 }
 .highlight::-webkit-scrollbar-thumb:horizontal:hover {
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(0, 0, 0, .6);
 }
 .highlight pre {
   margin: 0;
@@ -701,7 +643,8 @@ dfn,
 .answer h5 {
   font-size: 19px;
 }
-@media only screen and (-webkit-min-device-pixel-ratio2), only screen and (min-device-pixel-ratio2) {
+@media only screen and (-webkit-min-device-pixel-ratio2),
+only screen and (min-device-pixel-ratio2) {
   .icon-arrow-right {
     background-image: url(http://static.daily.zhihu.com/img/share-icons@2x.png);
     -webkit-background-size: 82px 55px;
@@ -878,39 +821,30 @@ a.origin-source:link .text {
 .question-title {
   color: #494b4d;
 }
-
 blockquote {
   color: #9da3a6;
   border-left: 3px solid #Dfe3e6;
 }
-
 .content a {
   color: #4786b3;
 }
-
 .content {
   font-size: 17px;
   color: #616466;
 }
-
 .content-wrap {
   background: #fff;
 }
-
 hr {
   margin: 30px 0;
   border-top-width: 0;
 }
-
-
-p {
+.detail-container p {
   margin: 20px 0 !important;
 }
-
 .dudu-night .content {
   color: #797b80;
 }
-
 .dudu-night hr {
   color: #27282b;
   border-color: #27282b;
@@ -924,7 +858,6 @@ p {
 .dudu-night .question-title {
   color: #919499;
 }
-
 .dudu-night .headline {
   border-bottom: none;
 }
@@ -935,10 +868,10 @@ body.dudu-night,
 .dudu-night .content-wrap {
   background: #1d1e1f;
 }
-.dudu-night .answer + .answer {
+.dudu-night .answer+.answer {
   border-top: 2px solid #27282b;
 }
-.dudu-night .question + .question {
+.dudu-night .question+.question {
   border-top: 4px solid #27282b;
 }
 .dudu-night .view-more a {
@@ -962,11 +895,9 @@ body.dudu-night,
 .dudu-night .content a {
   color: #396280;
 }
-
 .dudu-night img {
   opacity: 0.7;
 }
-
 .dudu-night .from-column {
   color: #2b82ac;
   background-image: url(http://static.daily.zhihu.com/img/Dark_News_Column_Entrance.png);
@@ -974,17 +905,14 @@ body.dudu-night,
 .dudu-night .from-column:active {
   background-image: url(http://static.daily.zhihu.com/img/Dark_News_Column_Entrance_Highlight.png);
 }
-
-//ç¦ç”¨å¤´éƒ¨ä¸‹é¢çš„åˆ†éš”çº¿
+//绂佺敤澶撮儴涓嬮潰鐨勫垎闅旂嚎
 .dudu .headline {
   border-bottom: none;
 }
-
 .dudu-night .origin-source,
 .dudu-night a.origin-source:link {
   background: #222324;
 }
-
 .dudu-night .origin-source.with-link .text {
   color: #797b80;
 }
@@ -992,46 +920,19 @@ body.dudu-night,
   border-color: transparent transparent transparent #797b80;
 }
 
+.img-place-holder image {
+  width: 100%;
+  margin-top: -18%;
+}
 </style>
 <template>
   <import src="../wxParse/wxParse.wxml" />
-  
   <view class="container">
-    <view class="header">
-      <image mode="widthFix" src="{{detailInfo.image}}" class="header-image"></image>
-      <view class="header-text">
-        <text class="header-title">{{detailInfo.title}}</text>
-        <text class="header-source">图片来源：{{detailInfo.image_source}}</text>
-      </view>
-    </view>
-    <view class="main">
-      <!-- <view wx:for="{{questions}}" wx:for-item="question" wx:key="*this" class="question">
-        <text class="question-title">{{question.question}}</text>
-        <view wx:for="{{question.answers}}" wx:for-item="answer" wx:key="*this" class="answer">
-          <view class="user">
-            <image mode="widthFix" src="{{answer.user.img}}" class="user-avatar"></image>
-            <text class="user-name">{{answer.user.name}}</text>
-            <text class="user-bio">{{answer.user.bio}}</text>
-          </view>
-          <view class="content">
-            <block wx:for="{{answer.content}}" wx:key="*this">
-              <view wx:if="{{item.type===2}}" class="content-image">
-                <image mode="widthFix" src="{{item.text}}"></image>
-              </view>
-              <view wx:else class="content-text">
-                <text>{{item.text}}</text>
-              </view>
-            </block>
-          </view>
-        </view>
-      </view> -->
-      <template is="wxParse" data="{{wxParseData:storyBody.nodes}}"/>
-    </view>
+    <template is="wxParse" data="{{wxParseData:storyBody.nodes}}"/>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
-var DOMParser = require('xmldom').DOMParser
 import WxParse from '../wxParse/wxParse.js'
 
 /* global wx */
@@ -1042,9 +943,9 @@ export default class StoryDetail extends wepy.page {
 
   data = {
     id: 0,
-    questions: [],
     detailInfo: {},
-    storyBody: {}
+    storyBody: {},
+    images: []
   }
 
   computed = {
@@ -1062,8 +963,7 @@ export default class StoryDetail extends wepy.page {
     })
     this.id = options.id
     this.$apply()
-    let res = await this.getDetail()
-    this.detailInfo = res
+    this.detailInfo = await this.getDetail()
     wepy.hideLoading()
     this.$apply()
     let saw = wx.getStorageSync('saw') || []
@@ -1076,79 +976,43 @@ export default class StoryDetail extends wepy.page {
   getDetail () {
     return wepy.request(this.detailApi).then(res => {
       res.data.body = res.data.body.replace(/<script.*/g, '')
-      let that = this
-      console.log(this.setData)
-      WxParse.wxParse('storyBody', 'html', res.data.body, that, 0)
-      console.log(this.storyBody)
-      this.questions = this.htmlToJson(res.data.body)
+      // 插入最上面的大图
+      var findstr = '<div class="img-place-holder"></div>'
+      var replacestr = '<div class="img-place-holder">' +
+        '<img src=' + res.data.image + ' /><h1 class="headline-title">' + res.data.title + '</h1>' +
+        '<span class="img-source">图片：' + res.data.image_source + '</span></div>'
+      res.data.body = res.data.body.replace(findstr, replacestr)
+      WxParse.wxParse('storyBody', 'html', res.data.body, this, 0)
       return res.data
     })
   }
 
-  htmlToJson (htmlStr) {
-    let body = htmlStr.replace(/<script.*/g, '')
-    let doc = new DOMParser().parseFromString(body, 'text/html')
-    let elements = doc.documentElement.childNodes
-    for (var i = 0; i < elements.length; i++) {
-      if (elements[i].nodeName === 'div' && elements[i].getAttribute('class') === 'content-inner') {
-        var startNode = elements[i]
-        break
-      }
+  wxParseImgLoad (image) {
+    if (image.detail.width > 100 && !~this.images.indexOf(image.target.dataset.src)) {
+      this.images.push(image.target.dataset.src)
     }
-    if (!startNode) {
-      throw new Error('解析HTML错误')
-    }
-    let questions = []
-    // 遍历所有的问题
-    for (let queNode = startNode.firstChild; queNode; queNode = queNode.nextSibling) {
-      if (queNode.nodeName !== 'div' || queNode.getAttribute('class') !== 'question') {
-        continue
-      }
-      let question = {
-        question: queNode.getElementsByTagName('h2')[0].textContent,
-        answers: []
-      }
-
-      // 遍历问题下的回答
-      for (let answerNode = queNode.firstChild; answerNode; answerNode = answerNode.nextSibling) {
-        if (answerNode.nodeName !== 'div' || answerNode.getAttribute('class') !== 'answer') {
-          continue
-        }
-        let answer = {}
-
-        // 寻找回答下的用户和回答的内容
-        for (let infoNode = answerNode.firstChild; infoNode; infoNode = infoNode.nextSibling) {
-          if (infoNode.nodeName === 'div' && infoNode.getAttribute('class') === 'meta') {
-            // 回答下的用户
-            let user = {}
-            user.name = infoNode.getElementsByTagName('span')[0].textContent
-            user.bio = infoNode.getElementsByTagName('span')[1] ? infoNode.getElementsByTagName('span')[1].textContent : ''
-            user.img = infoNode.getElementsByTagName('img')[0].getAttribute('src')
-            answer.user = user
-          } else if (infoNode.nodeName === 'div' && infoNode.getAttribute('class') === 'content') {
-            // 回答的内容
-            let content = []
-            for (let contentNode = infoNode.firstChild; contentNode != null; contentNode = contentNode.nextSibling) {
-              if (contentNode.nodeName === 'p' && contentNode.getElementsByTagName('img').length > 0) {
-                let item = {type: 2, text: contentNode.getElementsByTagName('img')[0].getAttribute('src')}
-                content.push(item)
-              } else if (contentNode.nodeName === 'p') {
-                let item = {type: 1, text: contentNode.textContent}
-                content.push(item)
-              }
-            }
-            answer.content = content
-          }
-        }
-        question.answers.push(answer)
-      }
-      questions.push(question)
-    }
-    return questions
   }
-
-  wxParseImgLoad () {
-    console.log(this)
+  // 图片点击事件
+  wxParseImgTap (e) {
+    var nowImgUrl = e.target.dataset.src
+    var tagFrom = e.target.dataset.from
+    if (typeof (tagFrom) !== 'undefined' && tagFrom.length > 0) {
+      wx.previewImage({
+        current: nowImgUrl, // 当前显示图片的http链接
+        urls: this.images // 需要预览的图片http链接列表
+      })
+    }
+  }
+  async wxParseTagATap (e) {
+    if (e.currentTarget.dataset.src) {
+      await wepy.setClipboardData({
+        data: e.currentTarget.dataset.src
+      })
+      wepy.showToast({
+        icon: 'success',
+        title: '网址已复制'
+      })
+    }
   }
   onShareAppMessage (options) {
     let title = '瞎扯·如何正确的吐槽'
