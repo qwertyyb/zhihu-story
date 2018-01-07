@@ -126,7 +126,6 @@ blockquote {
   border-left: 3px solid #D0E5F2;
   font-style: normal;
   display: block;
-  vertical-align: baseline;
   font-size: 100%;
   margin: .5em 0;
   padding: 0 0 0 1em;
