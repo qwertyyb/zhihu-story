@@ -964,13 +964,14 @@ export default class StoryDetail extends wepy.page {
     wepy.hideLoading()
     this.$apply()
     let saw = wx.getStorageSync('saw') || []
-    if (!~saw.indexOf(this.id)) {
-      saw.push(this.id)
+    if (!~saw.indexOf(options.id)) {
+      saw.push(options.id)
       wx.setStorageSync('saw', saw)
     }
   }
 
   getDetail (id) {
+    this.id = id
     return wepy.request(this.detailApi + id).then(res => {
       res.data.body = res.data.body.replace(/<script.*/g, '')
       // 插入最上面的大图
