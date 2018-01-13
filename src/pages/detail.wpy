@@ -919,6 +919,10 @@ body.dudu-night,
   border-color: transparent transparent transparent #797b80;
 }
 
+// 自定义样式
+.meta {
+  width: calc(~'750rpx - 40px');
+}
 .img-place-holder image {
   width: 100%;
   margin-top: -18%;
