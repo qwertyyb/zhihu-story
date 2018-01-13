@@ -86,5 +86,10 @@ page
       this.$apply()
       wepy.hideNavigationBarLoading()
     }
+    onShareAppMessage () {
+      let title = '瞎扯——如何正确的吐槽'
+      let path = '/pages/index'
+      return {title, path}
+    }
   }
 </script>
